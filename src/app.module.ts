@@ -11,10 +11,18 @@ import { BrandVehicleModule } from './modules/brand-vehicle/brand-vehicle.module
 import { TypeVehicleModule } from './modules/type-vehicle/type-vehicle.module';
 import { ColorVehicleModule } from './modules/color-vehicle/color-vehicle.module';
 import { ModelVehicleModule } from './modules/model-vehicle/model-vehicle.module';
+import { Configuration } from './config/config.keys';
+import { ConfigService } from './config/config.service';
 
 @Module({
   imports: [AccountModule, AccessTokenModule, ConfigModule, DatabaseModule, RoleModule, VehicleModule, BrandVehicleModule, TypeVehicleModule, ColorVehicleModule, ModelVehicleModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  static port: number | string;
+
+  constructor(private readonly _configService: ConfigService){
+    AppModule.port = this._configService.get(Configuration.PORT);
+  }
+}

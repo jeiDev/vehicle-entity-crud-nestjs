@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
-import { VehiclesRepository } from './vehicle.repository';
+import { VehicleRepository } from './vehicle.repository';
 
 @Injectable()
 export class VehicleService{
     constructor(
-        @InjectRepository(VehiclesRepository)
-        private readonly _vehiclesRepository: VehiclesRepository
+        @InjectRepository(VehicleRepository)
+        private readonly _vehicleRepository: VehicleRepository
     ){}
+
+    async get(){
+        return "testing";
+    }
 }
