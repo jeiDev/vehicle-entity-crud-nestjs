@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('types_vehicle')
-export class TypeVehicles extends BaseEntity{
+export class TypeVehicle extends BaseEntity{
 
     @PrimaryGeneratedColumn('increment')
     id: number;
