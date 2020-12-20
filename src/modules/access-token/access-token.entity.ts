@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Account } from '../account/account.entity';
 
 
@@ -14,9 +14,13 @@ export class AccessToken extends BaseEntity{
     @Column({type: 'varchar', default: 86400000})
     ttl: number;
 
+    @Column()
+    idOwner: number;
+
     @CreateDateColumn({type: 'timestamp', name: 'created_at'})
     createdAt: Date;
 
     @ManyToOne(() => Account, account => account.accessToken)
+    @JoinColumn({referencedColumnName: "id", name: "idOwner"})
     owner: Account;
 }

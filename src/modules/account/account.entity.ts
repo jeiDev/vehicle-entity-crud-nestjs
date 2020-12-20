@@ -1,5 +1,6 @@
 import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { AccessToken } from '../access-token/access-token.entity';
+import { RoleAccount } from '../role/role-account.entity';
 import { AccountDetails } from './account.details.entity';
 
 @Entity('accounts')
@@ -26,12 +27,12 @@ export class Account extends BaseEntity{
     @DeleteDateColumn({type: 'timestamp', name: 'deleted_at'})
     deletedAt: Date;
 
-    @OneToOne(type => AccountDetails, {
+    @OneToOne(() => AccountDetails, {
         cascade: true,
         nullable: false,
         eager: true
     })
-    @JoinColumn({name: 'detail_id'})
+    @JoinColumn({referencedColumnName: "id"})
     details: AccountDetails;
 
     @OneToMany(() => AccessToken, accessToken => accessToken.owner, {
@@ -39,5 +40,14 @@ export class Account extends BaseEntity{
         nullable: false,
         eager: true
     })
+    @JoinColumn({referencedColumnName: "id"})
     accessToken: AccessToken[];
+
+    @OneToMany(() => RoleAccount, roleAccount => roleAccount.owner, {
+        cascade: true,
+        nullable: false,
+        eager: true
+    })
+    @JoinColumn({referencedColumnName: "id"})
+    roles: RoleAccount[];
 }
