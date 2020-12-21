@@ -21,10 +21,10 @@ export class Account extends BaseEntity{
     @CreateDateColumn({type: 'timestamp', name: 'created_at'})
     createdAt: Date;
 
-    @UpdateDateColumn({type: 'timestamp', name: 'updated_at'})
+    @UpdateDateColumn({type: 'timestamp', name: 'updated_at', select: false})
     updatedAt: Date;
 
-    @DeleteDateColumn({type: 'timestamp', name: 'deleted_at'})
+    @DeleteDateColumn({type: 'timestamp', name: 'deleted_at', select: false })
     deletedAt: Date;
 
     @OneToOne(() => AccountDetails, {
