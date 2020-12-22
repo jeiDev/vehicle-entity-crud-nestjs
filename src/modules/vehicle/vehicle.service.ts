@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException,  } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm'
 import { BrandVehicleRepository } from '../brand-vehicle/brand-vehicle.repository';
+import { ColorVehicle } from '../color-vehicle/color-vehicle.entity';
+import { ColorVehicleRepository } from '../color-vehicle/color-vehicle.repository';
 import { ModelVehicleRepository } from '../model-vehicle/model-vehicle.repository';
 import { TypeVehicleRepository } from '../type-vehicle/type-vehicle.repository';
 import { VehicleDto } from './dto/vehicle.dto';
@@ -15,6 +17,7 @@ export class VehicleService{
         private readonly _typeVehicleRepository: TypeVehicleRepository,
         private readonly _brandVehicleRepository: BrandVehicleRepository, 
         private readonly _modelVehicleRepository: ModelVehicleRepository, 
+        private readonly _colorVehicleRepository: ColorVehicleRepository, 
     ){}
 
     async get(id: number): Promise<Vehicle>{
@@ -36,16 +39,25 @@ export class VehicleService{
         return vehicles;
     }
 
-    async create(data: VehicleDto): Promise<Vehicle>{
+    async create(data: VehicleDto){
         try {
             const type = await this._typeVehicleRepository.save(data.type);
             const brand = await this._brandVehicleRepository.save(data.brand);
             const model = await this._modelVehicleRepository.save(data.model);
+            
+            let colors: ColorVehicle[] = [];
+
+            await data.colors.forEach(async (color) => {
+                const data = await this._colorVehicleRepository.create();
+
+                colors.push(data)
+            })
 
             const vehicle = await this._vehicleRepository.create(data)
                   vehicle.type = type
                   vehicle.brand = brand
                   vehicle.model = model
+                  vehicle.colors = colors
 
             const response = await vehicle.save()
             return response;

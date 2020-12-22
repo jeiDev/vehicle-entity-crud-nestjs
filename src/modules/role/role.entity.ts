@@ -1,4 +1,5 @@
-import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Account } from '../account/account.entity';
 
 @Entity('roles')
 export class Role extends BaseEntity{
@@ -9,6 +10,9 @@ export class Role extends BaseEntity{
     @Column({type: 'varchar', unique: true, nullable: false})
     level: string;
 
+    @Column()
+    idOwner: number;
+
     @CreateDateColumn({type: 'timestamp', name: 'created_at'})
     createdAt: Date;
 
@@ -17,4 +21,8 @@ export class Role extends BaseEntity{
 
     @DeleteDateColumn({type: 'timestamp', name: 'deleted_at'})
     deletedAt: Date;
+
+    @ManyToOne(() => Account, account => account.roles)
+    @JoinColumn({referencedColumnName: "id", name: "idOwner"})
+    owner: Account;
 }

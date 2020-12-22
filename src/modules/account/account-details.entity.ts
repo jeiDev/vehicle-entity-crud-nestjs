@@ -26,6 +26,6 @@ export class AccountDetails extends BaseEntity{
     deletedAt: Date;
 
     @OneToOne(() => Account)
-    @JoinColumn({referencedColumnName: "id", name: "idOwner"})
+    @JoinColumn({referencedColumnName: "id"})
     owner: Account;
 }

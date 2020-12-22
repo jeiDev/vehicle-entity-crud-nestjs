@@ -20,7 +20,9 @@ export class AccessToken extends BaseEntity{
     @CreateDateColumn({type: 'timestamp', name: 'created_at'})
     createdAt: Date;
 
-    @ManyToOne(() => Account, account => account.accessToken)
+    @ManyToOne(() => Account, account => account.accessToken, {
+        eager: true
+    })
     @JoinColumn({referencedColumnName: "id", name: "idOwner"})
     owner: Account;
 }

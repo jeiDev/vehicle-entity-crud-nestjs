@@ -35,24 +35,18 @@ export class Vehicle extends BaseEntity{
     deletedAt: Date;
 
     @OneToOne(() => TypeVehicle, type => type.vehicle, {
-        cascade: true,
-        nullable: false,
         eager: true
     })
     @JoinColumn({referencedColumnName: "id", name: "idType"})
     type: TypeVehicle;
 
     @OneToOne(() => BrandVehicle, brand => brand.vehicle, {
-        cascade: true,
-        nullable: false,
         eager: true
     })
     @JoinColumn({referencedColumnName: "id", name: "idBrand"})
     brand: BrandVehicle;
 
     @OneToOne(() => ModelVehicle, model => model.vehicle, {
-        cascade: true,
-        nullable: false,
         eager: true
     })
     @JoinColumn({referencedColumnName: "id", name: "idModel"})

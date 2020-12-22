@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from '@n
 import { VehicleDto } from './dto/vehicle.dto';
 import { VehicleService } from './vehicle.service';
 
-@Controller('vehicle')
+@Controller('vehicles')
 export class VehicleController {
     constructor(private readonly _vehicleService: VehicleService){}
 
@@ -12,8 +12,8 @@ export class VehicleController {
     }
 
     @Get()
-    async getAll(id: number){
-        return await this._vehicleService.get(id)
+    async getAll(){
+        return await this._vehicleService.getAll()
     }
 
     @Post()
